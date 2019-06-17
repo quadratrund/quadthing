@@ -247,8 +247,6 @@ void https_loop() {
     response = pageNetwork();
   } else if (path.equals("/p/config")) {
     response = page_config();
-  //} else if (path.equals("/js/config")) {
-  //  response = page_config_js();
   } else if (path.equals("/p/home")) {
     response = pageHome();
   } else if (path.equals("/p/pass")) {
@@ -258,6 +256,8 @@ void https_loop() {
     restartFlag = true;
   } else if (path.equals("/api/states")) {
     response = page_apiStates();
+  } else if (path.equals("/css/global")) {
+    response = page_css();
   } else if (path.equals("/switch")) {
     switch_outputs(params);
     response = http_redirect(myIP, "/p/home");

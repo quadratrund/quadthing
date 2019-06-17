@@ -2,11 +2,12 @@ extern uint8_t outState[8];
 
 String navBar() {
   return
-    "<a href=\"/p/home\">Home</a> "
-    "<a href=\"/p/network\">Netzwerk</a> "
-    "<a href=\"/p/pass\">Kennwort &auml;ndern</a> "
-    "<a href=\"/p/config\">Sonstige Konfiguration</a> "
-    "<br>";
+    "<div class=\"navbar\">"
+      "<a href=\"/p/home\">Home</a> "
+      "<a href=\"/p/network\">Netzwerk</a> "
+      "<a href=\"/p/pass\">Kennwort &auml;ndern</a> "
+      "<a href=\"/p/config\">Sonstige Konfiguration</a> "
+    "</div>";
 }
 
 HttpResponse pageNetwork() {
@@ -120,17 +121,13 @@ HttpResponse page_config() {
   return response;
 }
 
-/*
-HttpResponse page_config_js() {
-  HttpResponse response = http_ok();
-  response.addHeader("Content-Type", "text/javascript; charset=us-ascii");
-  response.content += "document.getElementById('outputs').value='";
-  if (cfg_feedbackMode) {
-    response.content += String(cfg_outputCount + 8, DEC);
-  } else {
-    response.content += String(cfg_outputCount, DEC);
-  }
-  response.content += "';";
+HttpResponse page_css() {
+  HttpResponse response = 200;
+  response.addHeader("Content-Type", "text/css; charset=us-ascii");
+  response.addHeader("Cache-Control", "max-age=86400");
+  response.content = "body { margin: 10px; }"
+                     ".navbar { background-color: black; padding-left: 10px; margin-top: -10px; margin-left: -10px; margin-right: -10px; margin-bottom: 10px; }"
+                     ".navbar > a { display: inline-block; padding: 10px; color: white; text-decoration: none; }"
+                     ".navbar > a:hover { background-color: #444444; }";
   return response;
 }
-*/

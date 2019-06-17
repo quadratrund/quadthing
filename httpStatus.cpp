@@ -21,7 +21,8 @@ HttpResponse http_notFound() {
 HttpResponse http_okHead() {
   HttpResponse response(200);
   response.addHeader("Content-Type", "text/html; charset=us-ascii");
-  response.content = "<!DOCTYPE HTML>\r\n<html>\r\n";
+  response.content = "<!DOCTYPE HTML>\r\n<html>\r\n"
+                      "<head><link rel=\"stylesheet\" href=\"/css/global\" /></head>";
   return response;
 }
 
