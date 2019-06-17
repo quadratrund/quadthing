@@ -13,6 +13,7 @@
 #include "Pins.h"
 #include "config.h"
 #include "httpStatus.h"
+#include "switch.h"
 
 // The certificate is stored in PMEM
 static const uint8_t x509[] PROGMEM = {
@@ -262,6 +263,9 @@ void https_loop() {
     restartFlag = true;
   } else if (path.equals("/api/states")) {
     response = page_apiStates();
+  } else if (path.equals("/api/switch")) {
+    i = switch_multiOutputs(params);
+    response = page_apiGenericResponse(String(i, DEC));
   } else if (path.equals("/css/global")) {
     response = page_css();
   } else if (path.equals("/switch")) {

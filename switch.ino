@@ -42,13 +42,19 @@ void switch_setupOutputsFromCfg() {
   }
 }
 
-bool switch_outputs(String params) {
+bool switch_outputs(String params, String suffix) {
   safetyTimeout = millis() + cfg_safetyTimeout_ms;
-  uint8_t id = getParamValue(params, "id").toInt();
+  Serial.print(suffix);
+  Serial.print(" ");
+  uint8_t id = getParamValue(params, "id"  + suffix).toInt();
+  Serial.print(id, DEC);
   if (id >= cfg_outputCount) {
+    Serial.println();
     return false;
   }
-  String set = getParamValue(params, "set");
+  String set = getParamValue(params, "set" + suffix);
+  Serial.print(" ");
+  Serial.println(set);
   uint8_t newState;
   if (set.equals("toggle")) {
     switch_toggleOutState(id);
@@ -62,8 +68,17 @@ bool switch_outputs(String params) {
     switch_setStateWithFeedback(id, HIGH);
   } else if (set.equals("off")) {
     switch_setStateWithFeedback(id, LOW);
+  } else {
+    return false;
   }
   return true;
+}
+
+int switch_multiOutputs(String params) {
+  int i;
+
+  for (i = 0; switch_outputs(params, String(i, DEC)); i++);
+  return i;
 }
 
 uint8_t switch_getOutState(int id) {

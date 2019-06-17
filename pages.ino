@@ -1,4 +1,4 @@
-extern uint8_t outState[8];
+#include "switch.h"
 
 String navBar() {
   return
@@ -71,16 +71,32 @@ HttpResponse pageHome() {
   return response;
 }
 
+HttpResponse page_apiGenericResponse(String payloadJson) {
+  int i;
+  HttpResponse response = http_ok();
+  response.content = "{\"status\":{\"code\":0,\"message\":\"ok\"},\"payload\":";
+  response.content += payloadJson;
+  response.content += '}';
+  return response;
+}
+
 HttpResponse page_apiStates() {
   int i;
-  String data = "[";
+  String data = "{\"output\":[";
   HttpResponse response = http_ok();
   for (i = 0; i < cfg_outputCount; i++) {
-    data += outState[i] ? "true," : "false,";
+    data += outState[i] ? "false," : "true,";
   }
   data.setCharAt(data.length() - 1, ']');
-  response.content = data;
-  return response;
+  if (cfg_feedbackMode) {
+    data += ",\"inputs\":[";
+    for (i = 0; i < cfg_outputCount; i++) {
+      data += digitalRead(outputs[i+4]) == HIGH ? "true," : "false,";
+    }
+    data.setCharAt(data.length() - 1, ']');
+  }
+  data += "}";
+  return page_apiGenericResponse(data);
 }
 
 HttpResponse page_config() {
