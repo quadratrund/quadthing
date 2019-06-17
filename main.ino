@@ -103,6 +103,9 @@ void setup() {
 
   switch_setupOutputsFromCfg();
 
+  pinMode(D4, OUTPUT);
+  digitalWrite(D4, LOW);
+
   if (cfg_ssid[0]) {
     // Connect to WiFi network
     Serial.print(F("Connecting to "));
@@ -141,6 +144,7 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(D4, HIGH);
   if (restartFlag) {
     ESP.restart();
   }
@@ -157,6 +161,7 @@ void http_loop() {
   if (!client) {
     return;
   }
+  digitalWrite(D4, LOW);
   Serial.println(F("------------------------------HTTP"));
   Serial.println(client.remoteIP());
 
@@ -190,6 +195,7 @@ void https_loop() {
   if (!client) {
     return;
   }
+  digitalWrite(D4, LOW);
   Serial.println(F("------------------------------HTTPS"));
   Serial.println(client.remoteIP());
 
