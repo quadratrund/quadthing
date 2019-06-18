@@ -147,3 +147,13 @@ HttpResponse page_css() {
                      ".navbar > a:hover { background-color: #444444; }";
   return response;
 }
+
+HttpResponse page_redirect(String path) {
+  HttpResponse response = http_okHead();
+  response.content += "<body>";
+  response.content += navBar();
+  response.content += "<script>setTimeout(() => location.href = '";
+  response.content += path;
+  response.content += "', 3000);</script></body></html>";
+  return response;
+}

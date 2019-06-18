@@ -1,12 +1,3 @@
-/*
-    This sketch demonstrates how to set up a simple HTTP-like server.
-    The server will set a GPIO pin depending on the request
-      http://server_ip/gpio/0 will set the GPIO2 low,
-      http://server_ip/gpio/1 will set the GPIO2 high
-    server_ip is the IP address of the ESP8266 module, will be
-    printed to Serial when the module is connected.
-*/
-
 #include <ESP8266WiFi.h>
 #include <Hash.h>
 #include <EEPROM.h>
@@ -244,11 +235,11 @@ void https_loop() {
     response = http_redirect(myIP, "/p/pass");
   } else if (path.equals("/c/network")) {
     config_setNetwork(postVars);
-    response = http_redirect(myIP, "/p/network");
+    response = page_redirect("/p/network");
     restartFlag = true;
   } else if (path.equals("/c/config")) {
     config_outputCount(postVars);
-    response = http_redirect(myIP, "/p/config");
+    response = page_redirect("/p/config");
     restartFlag = true;
   } else if (path.equals("/p/network")) {
     response = pageNetwork();
@@ -259,7 +250,7 @@ void https_loop() {
   } else if (path.equals("/p/pass")) {
     response = pagePass();
   } else if (path.equals("/restart")) {
-    response = http_redirect(myIP, "/p/home");
+    response = page_redirect("/p/home");
     restartFlag = true;
   } else if (path.equals("/api/states")) {
     response = page_apiStates();
