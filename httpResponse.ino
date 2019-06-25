@@ -1,9 +1,11 @@
 #include "httpResponse.h"
 
 HttpResponse::HttpResponse(): statusCode(200) {
+  this->addHeader("Connection", "close");
 }
 
 HttpResponse::HttpResponse(unsigned int statusCode): statusCode(statusCode) {
+  this->addHeader("Connection", "close");
 }
 
 void HttpResponse::addHeader(String name, String value) {
