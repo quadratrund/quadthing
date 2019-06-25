@@ -10,10 +10,10 @@ void switch_setupInitOutputs() {
   outputs[1] = D1;
   outputs[2] = D2;
   outputs[3] = D3;
-  outputs[4] = D5;
-  outputs[5] = D6;
-  outputs[6] = D7;
-  outputs[7] = D8;
+  outputs[4] = D4;
+  outputs[5] = D5;
+  outputs[6] = D6;
+  outputs[7] = D7;
   for (i = 0; i < 8; i++) {
     pinMode(outputs[i], i < 4 ? OUTPUT : INPUT);
     outState[i] = HIGH;
@@ -105,7 +105,7 @@ void switch_loop() {
   uint32_t now = millis();
   int id;
 
-  if (safetyTimeout && safetyTimeout > lastNow) {
+  if (cfg_safetyTimeout && safetyTimeout > lastNow) {
     if (now < lastNow) {
       safetyTimeout -= lastNow;
       safetyTimeout += now;

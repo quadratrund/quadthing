@@ -95,8 +95,10 @@ void setup() {
 
   switch_setupOutputsFromCfg();
 
+#ifdef ENABLE_STATUS_LED
   pinMode(D4, OUTPUT);
   digitalWrite(D4, LOW);
+#endif
 
   if (cfg_ssid[0]) {
     // Connect to WiFi network
@@ -136,7 +138,9 @@ void setup() {
 }
 
 void loop() {
+#ifdef ENABLE_STATUS_LED
   digitalWrite(D4, HIGH);
+#endif
   if (restartFlag) {
     ESP.restart();
   }
@@ -153,7 +157,9 @@ void http_loop() {
   if (!client) {
     return;
   }
+#ifdef ENABLE_STATUS_LED
   digitalWrite(D4, LOW);
+#endif
   Serial.println(F("------------------------------HTTP"));
   Serial.println(client.remoteIP());
 
@@ -187,7 +193,9 @@ void https_loop() {
   if (!client) {
     return;
   }
+#ifdef ENABLE_STATUS_LED
   digitalWrite(D4, LOW);
+#endif
   Serial.println(F("------------------------------HTTPS"));
   Serial.println(client.remoteIP());
 
