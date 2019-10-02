@@ -1,6 +1,7 @@
 
 extern uint8_t cfg_outputCount;
 extern bool cfg_feedbackMode;
+extern bool cfg_bundleMode;
 extern uint8_t cfg_pwdhash[20];
 extern char cfg_ssid[33];
 extern char cfg_key[64];

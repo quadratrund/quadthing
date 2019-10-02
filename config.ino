@@ -3,6 +3,7 @@
 
 uint8_t cfg_outputCount;
 bool cfg_feedbackMode;
+bool cfg_bundleMode;
 uint8_t cfg_pwdhash[20];
 char cfg_ssid[33];
 char cfg_key[64];
@@ -78,9 +79,19 @@ void config_read() {
   }
 
   cfg_outputCount = min((int)EEPROM.read(address++), 12);
-  cfg_feedbackMode = cfg_outputCount > 8;
-  if (cfg_feedbackMode) {
-    cfg_outputCount -= 8;
+  if (cfg_outputCount == 13) {
+    cfg_bundleMode = true;
+    cfg_feedbackMode = false;
+    cfg_outputCount = 4;
+  } else if (cfg_outputCount == 14) {
+    cfg_bundleMode = true;
+    cfg_feedbackMode = true;
+    cfg_outputCount = 2;
+  } else {
+    cfg_feedbackMode = cfg_outputCount > 8;
+    if (cfg_feedbackMode) {
+      cfg_outputCount -= 8;
+    }
   }
 
   for (i = 0; i < 20; i++) {
@@ -205,7 +216,7 @@ void config_setNetwork(String postVars) {
 void config_outputCount(String postVars) {
   int count = getParamValue(postVars, "outputs").toInt();
   Serial.println(count);
-  if (count < 1 || count > 12) {
+  if (count < 1 || count > 14) {
     count = 8;
   }
   EepromUpdate(1, count);

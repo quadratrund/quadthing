@@ -118,9 +118,13 @@ HttpResponse page_config() {
                       "<option value=\"10\">2 Ausg&auml;nge (Feedback-Modus)</option>"
                       "<option value=\"11\">3 Ausg&auml;nge (Feedback-Modus)</option>"
                       "<option value=\"12\">4 Ausg&auml;nge (Feedback-Modus)</option>"
+                      "<option value=\"13\">4 Kreuzschalter</option>"
+                      "<option value=\"14\">2 Kreuzschalter (Feedback-Modus)</option>"
                       "</select><br>"
                       "Die Pins D0 bis D3 sind die Ausg&auml;nge 1-4.<br>"
-                      "Die Pins D5 bis D8 sind die Ausg&auml;nge 5-8 oder die Feedback-Eing&auml;nge f&uuml;r die Ausg&auml;nge 1-4.<br><br>"
+                      "Die Pins D4 bis D7 sind die Ausg&auml;nge 5-8 oder die Feedback-Eing&auml;nge f&uuml;r die Ausg&auml;nge 1-4.<br>"
+                      "Im 4 Kreuzschalter-Modus werden die Pins D4 bis D7 mit D0 bis D3 mit geschaltet.<br>"
+                      "Im 2 Kreuzschalter-Modus werden die Pins D2 und D3 mit D0 und D1 mit geschaltet.<br><br>"
                       "Sicherheitsabschaltung nach <input type=\"text\" name=\"timeout\" value=\"";
   response.content += String(cfg_safetyTimeout, DEC);
   response.content += "\"> Minuten (Maximum: 255)<br>"
@@ -129,9 +133,17 @@ HttpResponse page_config() {
                       "<button type=\"submit\">OK</button>"
                       "</form><script>document.getElementById('outputs').value='";
   if (cfg_feedbackMode) {
-    response.content += String(cfg_outputCount + 8, DEC);
+    if (cfg_bundleMode) {
+      response.content += "14";
+    } else {
+      response.content += String(cfg_outputCount + 8, DEC);
+    }
   } else {
-    response.content += String(cfg_outputCount, DEC);
+    if (cfg_bundleMode) {
+      response.content += "13";
+    } else {
+      response.content += String(cfg_outputCount, DEC);
+    }
   }
   response.content += "';</script></body></html>";
   return response;

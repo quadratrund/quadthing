@@ -71,6 +71,11 @@ bool switch_outputs(String params, String suffix) {
   } else {
     return false;
   }
+
+  if (cfg_bundleMode) {
+    outState[id + cfg_outputCount] = outState[id];
+    digitalWrite(outputs[id + cfg_outputCount], outState[id]);
+  }
   return true;
 }
 
