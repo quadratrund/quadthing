@@ -39,3 +39,11 @@ Changes the state of one or more outputs.
   * **toggle** to toggle the output.
   * **on** same as low, if feedback mode is off. See Description of Feedback Mode in [Features](#features) otherwise.
   * **off** same as high, if feedback mode is off. See Description of Feedback Mode in [Features](#features) otherwise.
+
+## Serial Commands
+you can send commands via serial interface. Commands are seperated by the new liine character. There are currently two commands available:
+* **restart** does simply restart the ESP8266.
+* **reset_wifi** deletes the wifi network name from the configuration. This means after the next restart the ESP8266 serves the network QuadThing instead of connecting to a Wifi.
+
+## How To Reset The Configuration
+To reset the whole configuration, you need to start the programm while the analog input (A0) is connected to high (3V).
