@@ -3,15 +3,18 @@ This program allows to control the GPIO pins of a NodeMCU via HTTPS requests. It
 
 ## Features
 * **Configuration via web inerface**
-* **Simple passowrd check**: You can optionally set a password for access via HTTPS. **Note:** The username can be any string. It is not checked.
+* **Simple password check**: You can optionally set a password for access via HTTPS. **Note:** The username can be any string. It is not checked.
 * **Feedback Mode:** Switch an output depending on an input state. When you request to swith an output on, it will be toggled, if the corresponding input is low. Nothing will happen, if the input already is high. The same for switching off: If the input already is low, nothing will happen. The output is toggled otherwise. **Note:** If you are not using the feedback mode, on means low and off means high.
 * **Bundle Mode:** Keep two outputs at the same state.
 * **Auto-Off after timeout:** Switch off all outputs after up to 255 minutes after the last user input. (Can be disabled by setting the timeout to 0)
 
+### Languages
+You can switch the web interface to another language by editing the include in the second line of the file pages.ino. Currently only english and german are available.
+
 ## Required Hardware
 This software is designed to run on an ESP8266 microcontroller. It was developed and tested with a NodeMCU v3.
 
-You may also want use this together with some Relais. An DC 5V Relay Module with Optocoupler should work in most cases.
+You may also want use this together with some Relais. A DC 5V Relay Module with Optocoupler should work in most cases.
 
 ## How To Start
 * Clone or download the repository (duh)

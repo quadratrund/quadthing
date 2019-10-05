@@ -1,5 +1,5 @@
 #include "switch.h"
-#include "translation_de.h"
+#include "translation_en.h"
 
 String navBar() {
   return
