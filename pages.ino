@@ -1,12 +1,13 @@
 #include "switch.h"
+#include "translation_de.h"
 
 String navBar() {
   return
     "<div class=\"navbar\">"
-      "<a href=\"/p/home\">Home</a> "
-      "<a href=\"/p/network\">Netzwerk</a> "
-      "<a href=\"/p/pass\">Kennwort &auml;ndern</a> "
-      "<a href=\"/p/config\">Sonstige Konfiguration</a> "
+      "<a href=\"/p/home\">" LANG_HOME "</a> "
+      "<a href=\"/p/network\">" LANG_NETWORK "</a> "
+      "<a href=\"/p/pass\">" LANG_CHANGE_PASSWORD "</a> "
+      "<a href=\"/p/config\">" LANG_OTHER_CONFIGURATION "</a> "
     "</div>";
 }
 
@@ -16,26 +17,26 @@ HttpResponse pageNetwork() {
   response.print("<body>");
   response.print(navBar());
   response.print("<form method=\"POST\" action=\"/c/network\"><table border=\"1\">");
-  response.print("<tr><td>Wifi SSID:</td><td><input name=\"ssid\" value=\"");
+  response.print("<tr><td>" LANG_WIFI_SSID ":</td><td><input name=\"ssid\" value=\"");
   tmp = cfg_ssid;
   htmlspecialchars(tmp);
   response.print(tmp);
   response.print("\"></td></tr>");
-  response.print("<tr><td>Wifi Key:</td><td><input name=\"key\" value=\"");
+  response.print("<tr><td>" LANG_WIFI_KEY ":</td><td><input name=\"key\" value=\"");
   tmp = cfg_key;
   htmlspecialchars(tmp);
   response.print(tmp);
   response.print("\"></td></tr>");
-  response.print("<tr><td>IP</td><td><input name=\"ip\" value=\"");
+  response.print("<tr><td>" LANG_IP "</td><td><input name=\"ip\" value=\"");
   response.print(cfg_ip);
   response.print("\"></td></tr>");
-  response.print("<tr><td>Prefixl&auml;nge</td><td><input name=\"prefixlen\" value=\"");
+  response.print("<tr><td>" LANG_PREFIXLENGTH "</td><td><input name=\"prefixlen\" value=\"");
   response.print(cfg_prefixlen, DEC);
   response.print("\"></td></tr>");
   response.print("<tr><td>Gateway</td><td><input name=\"gateway\" value=\"");
   response.print(cfg_gateway);
   response.print("\"></td></tr>");
-  response.print("<tr><td>&nbsp;</td><td><button type=\"submit\">OK</button></td></tr>");
+  response.print("<tr><td>&nbsp;</td><td><button type=\"submit\">" LANG_OK "</button></td></tr>");
   response.print("</table></form></body></html>");
   return response;
 }
@@ -44,7 +45,7 @@ HttpResponse pagePass() {
   HttpResponse response = http_okHead();
   response.content += "<body>";
   response.content += navBar();
-  response.content += "<form method=\"POST\" action=\"/c/pass\">neues Kennwort: <input type=\"password\" name=\"pass\"><button type=\"submit\">OK</button></form></body></html>";
+  response.content += "<form method=\"POST\" action=\"/c/pass\">" LANG_NEW_PASSWORD ": <input type=\"password\" name=\"pass\"><button type=\"submit\">" LANG_OK "</button></form></body></html>";
   return response;
 }
 
@@ -58,14 +59,14 @@ HttpResponse pageHome() {
     response.content += "<tr><td>";
     response.content += String(i + 1, DEC);
     response.content += "</td><td>";
-    response.content += switch_getOutState(i) ? "AN" : "AUS";
+    response.content += switch_getOutState(i) ? LANG_ON : LANG_OFF;
     response.content += "</td><td><a href=\"/switch?id=";
     response.content += String(i, DEC);
-    response.content += "&set=on\">einschalten</a></td><td><a href=\"/switch?id=";
+    response.content += "&set=on\">" LANG_SWITCH_ON "</a></td><td><a href=\"/switch?id=";
     response.content += String(i, DEC);
-    response.content += "&set=off\">ausschalten</a></td><td><a href=\"/switch?id=";
+    response.content += "&set=off\">" LANG_SWITCH_OFF "</a></td><td><a href=\"/switch?id=";
     response.content += String(i, DEC);
-    response.content += "&set=toggle\">umschalten</a></td></tr>";
+    response.content += "&set=toggle\">" LANG_TOGGLE "</a></td></tr>";
   }
   response.content += "</table>";
   return response;
@@ -104,33 +105,29 @@ HttpResponse page_config() {
   response.content += "<body>";
   response.content += navBar();
   response.content += "<form method=\"POST\" action=\"/c/config\">"
-                      "Betriebsmodus:"
+                      LANG_GPIO_MODE ":"
                       "<select name=\"outputs\" id=\"outputs\">"
                       "<option value=\"1\">1 Ausgang</option>"
-                      "<option value=\"2\">2 Ausg&auml;nge</option>"
-                      "<option value=\"3\">3 Ausg&auml;nge</option>"
-                      "<option value=\"4\">4 Ausg&auml;nge</option>"
-                      "<option value=\"5\">5 Ausg&auml;nge</option>"
-                      "<option value=\"6\">6 Ausg&auml;nge</option>"
-                      "<option value=\"7\">7 Ausg&auml;nge</option>"
-                      "<option value=\"8\">8 Ausg&auml;nge</option>"
-                      "<option value=\"9\">1 Ausgang (Feedback-Modus)</option>"
-                      "<option value=\"10\">2 Ausg&auml;nge (Feedback-Modus)</option>"
-                      "<option value=\"11\">3 Ausg&auml;nge (Feedback-Modus)</option>"
-                      "<option value=\"12\">4 Ausg&auml;nge (Feedback-Modus)</option>"
-                      "<option value=\"13\">4 Kreuzschalter</option>"
-                      "<option value=\"14\">2 Kreuzschalter (Feedback-Modus)</option>"
+                      "<option value=\"2\">2 " LANG_OUTPUTS "</option>"
+                      "<option value=\"3\">3 " LANG_OUTPUTS "</option>"
+                      "<option value=\"4\">4 " LANG_OUTPUTS "</option>"
+                      "<option value=\"5\">5 " LANG_OUTPUTS "</option>"
+                      "<option value=\"6\">6 " LANG_OUTPUTS "</option>"
+                      "<option value=\"7\">7 " LANG_OUTPUTS "</option>"
+                      "<option value=\"8\">8 " LANG_OUTPUTS "</option>"
+                      "<option value=\"9\">1 Ausgang (" LANG_FEEDBACK_MODE ")</option>"
+                      "<option value=\"10\">2 " LANG_OUTPUTS " (" LANG_FEEDBACK_MODE ")</option>"
+                      "<option value=\"11\">3 " LANG_OUTPUTS " (" LANG_FEEDBACK_MODE ")</option>"
+                      "<option value=\"12\">4 " LANG_OUTPUTS " (" LANG_FEEDBACK_MODE ")</option>"
+                      "<option value=\"13\">4 " LANG_BUNDLED_OUTPUTS "</option>"
+                      "<option value=\"14\">2 " LANG_BUNDLED_OUTPUTS " (" LANG_FEEDBACK_MODE ")</option>"
                       "</select><br>"
-                      "Die Pins D0 bis D3 sind die Ausg&auml;nge 1-4.<br>"
-                      "Die Pins D4 bis D7 sind die Ausg&auml;nge 5-8 oder die Feedback-Eing&auml;nge f&uuml;r die Ausg&auml;nge 1-4.<br>"
-                      "Im 4 Kreuzschalter-Modus werden die Pins D4 bis D7 mit D0 bis D3 mit geschaltet.<br>"
-                      "Im 2 Kreuzschalter-Modus werden die Pins D2 und D3 mit D0 und D1 mit geschaltet.<br><br>"
-                      "Sicherheitsabschaltung nach <input type=\"text\" name=\"timeout\" value=\"";
+                      LANG_GPIO_MODE_DESRIPTION "<br><br>"
+                      LANG_SAFETY_OFF_PREFIX " <input type=\"text\" name=\"timeout\" value=\"";
   response.content += String(cfg_safetyTimeout, DEC);
-  response.content += "\"> Minuten (Maximum: 255)<br>"
-                      "Die Sicherheitsabschaltung schaltet alle Ausg&auml;nge aus, wenn die angegebene Anzahl Minuten seit dem letzten Schaltvorgang vergangen ist.<br>"
-                      "Sie wird deaktiviert, wenn hier 0 Minuten eigestellt sind.<br><br>"
-                      "<button type=\"submit\">OK</button>"
+  response.content += "\"> " LANG_SAFETY_OFF_SUFFIX "<br>"
+                      LANG_SAFETY_OFF_DESCRIPTION "<br><br>"
+                      "<button type=\"submit\">" LANG_OK "</button>"
                       "</form><script>document.getElementById('outputs').value='";
   if (cfg_feedbackMode) {
     if (cfg_bundleMode) {
