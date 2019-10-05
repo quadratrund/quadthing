@@ -1,6 +1,23 @@
 #include <EEPROM.h>
 #include <Hash.h>
 
+/*
+  EEPROM structure
+
+ address | size | usage
+---------+------+------------------
+  0      |    1 | 'Q'
+  1      |    1 | output count/mode
+  2.. 21 |   20 | password hash
+ 22.. 53 | <=32 | wifi ssid
+ 54..116 | 8-63 | wifi key
+117..120 |    4 | ip
+121      |    1 | prefixlen
+122..125 |    4 | gateway
+126      |    1 | safetyTimeout
+
+*/
+
 uint8_t cfg_outputCount;
 bool cfg_feedbackMode;
 bool cfg_bundleMode;
@@ -39,7 +56,7 @@ void config_reset() {
 
   // extra byte
   EepromUpdate(address++, 'Q');
-  // anzahl outputs
+  // output count/mode
   EepromUpdate(address++, 8);
   // pwdhash
   sha1("", 0, hash);
