@@ -108,7 +108,7 @@ void setup() {
     WiFi.mode(WIFI_STA);
     WiFi.begin(cfg_ssid, cfg_key);
     if ((uint32_t)cfg_ip) {
-      WiFi.config(cfg_ip, cfg_gateway, cfg_netmask);
+      WiFi.config(cfg_ip, cfg_gateway, cfg_gateway, cfg_netmask);
     }
   
     while (WiFi.status() != WL_CONNECTED) {
